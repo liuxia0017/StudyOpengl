@@ -27,28 +27,44 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
 
     private ShaderUtil mDefaultUitl;
 
-    private int mProgram;//着色器程序ID
+    protected int mProgram;//着色器程序ID
 //    attribute vec4 vPosition;
-    private int glAPosition;
+    protected int glAPosition;
 //    attribute vec2 vCoordinate;
-    private int glACoordinate;
+    protected int glACoordinate;
 //    uniform mat4 vMatrix;
-    private int glUVMatrix;
+    protected int glUVMatrix;
 //    uniform sampler2D vTexture;
-    private int glUVTextture;
+    protected int glUVTextture;
 
-    private int glAColor;
 
-    private int glHUxy;
 
-    private Bitmap mBitmap;
+    protected Bitmap mBitmap;
     private float uXY;
+    private int glUisHalf;
 
     private float[] mViewMatrix=new float[16];
     private float[] mProjectMatrix=new float[16];
     private float[] mMVPMatrix=new float[16];
     private int textureId;
 
+
+    private int isHalf = 0;
+    public void setHalf(boolean ishalf){
+        if(ishalf){
+            isHalf = 1;
+        }else {
+            isHalf = 0;
+        }
+    }
+
+    public boolean getIsHalf(){
+        if(isHalf==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
     private final float[] sPos={
             -1.0f,1.0f,
@@ -79,8 +95,8 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
     public ImageBaseRender(Context c, String verFile, String fragFile){
         mContext = c;
         mDefaultUitl = new ShaderUtil();
-         versource = mDefaultUitl.loadFromAssetsFile(verFile,c.getResources());
-         fragsource = mDefaultUitl.loadFromAssetsFile(fragFile,c.getResources());
+        versource = mDefaultUitl.loadFromAssetsFile(verFile,c.getResources());
+        fragsource = mDefaultUitl.loadFromAssetsFile(fragFile,c.getResources());
         ByteBuffer bb=ByteBuffer.allocateDirect(sPos.length*4);
         bb.order(ByteOrder.nativeOrder());
         bPos=bb.asFloatBuffer();
@@ -101,16 +117,15 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        GLES20.glClearColor(0.5f,0.5f,0.5f,0.5f);
+        GLES20.glClearColor(1f,1f,1f,1f);
         mProgram = mDefaultUitl.createProgram(versource,fragsource);
 
 //        GLES20.glEnable(GLES20.GL_TEXTURE_2D);
-        glAPosition =  GLES20.glGetAttribLocation(mProgram,"vPosition");
+        glAPosition =  GLES20.glGetAttribLocation(mProgram,"aPosition");
         glACoordinate = GLES20.glGetAttribLocation(mProgram,"aCoordinate");
         glUVMatrix = GLES20.glGetUniformLocation(mProgram,"vMatrix");
         glUVTextture = GLES20.glGetUniformLocation(mProgram,"vTexture");
-        glAColor = GLES20.glGetAttribLocation(mProgram,"aColor");
-//        glHUxy = GLES20.glGetUniformLocation(mProgram,"uXY");
+        glUisHalf = GLES20.glGetUniformLocation(mProgram,"vIsHalf");
         onDrawCreatedSet(mProgram);
     }
 
@@ -156,6 +171,7 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
         onDrawSet();
 
 //        GLES20.glUniform1f(glHUxy,uXY);
+        GLES20.glUniform1i(glUisHalf,isHalf);
 
         GLES20.glUniformMatrix4fv(glUVMatrix,1,false,mMVPMatrix,0);
 

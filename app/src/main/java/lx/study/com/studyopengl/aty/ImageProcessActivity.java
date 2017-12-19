@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import lx.study.com.studyopengl.View.image.GrayImageRender;
+import lx.study.com.studyopengl.View.image.ImageBaseRender;
 import lx.study.com.studyopengl.View.image.ImageGLView;
 
 
@@ -42,7 +46,35 @@ public class ImageProcessActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem menuItem1 = menu.add(0, 0, 0, "只处理一半");
+        menuItem1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.add(0, 1, 1, "原图");
+        menu.add(0, 2, 1, "灰度");
 
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 0:   mGlView.setHalf(!mGlView.getIsHalf());  break;
+            case 1:   mGlView.setImageRender(new ImageBaseRender(this,"imageprocess/ver.glsl","imageprocess/frag.glsl") {
+                @Override
+                protected void onDrawCreatedSet(int mProgram) {
+
+                }
+
+                @Override
+                protected void onDrawSet() {
+
+                }
+            });   break;
+            case 2:   mGlView.setImageRender(new GrayImageRender(this));   break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onResume() {

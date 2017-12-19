@@ -16,11 +16,28 @@ public class ImageGLView  extends GLSurfaceView{
     private ImageRender mRender;
     private Bitmap mBitmap;
 
-
     public ImageGLView(Context context,Bitmap bm) {
         super(context);
         this.mBitmap = bm;
         init(context);
+    }
+
+    public void setImageRender(ImageBaseRender render){
+        if(mRender!=null){
+            mRender.setImageRender(render);
+            mRender.setImage(mBitmap);
+            mRender.setRequsetFresh();
+            this.requestRender();
+        }
+    }
+
+    public void setImage(Bitmap bm){
+        if(mRender!=null){
+            mRender.setImage(bm);
+            mRender.setRequsetFresh();
+
+        }
+        this.requestRender();
     }
 
     public ImageGLView(Context context, AttributeSet attrs) {
@@ -50,4 +67,12 @@ public class ImageGLView  extends GLSurfaceView{
     }
 
 
+    public void setHalf(boolean half) {
+        mRender.setHalf(half);
+        mRender.setRequsetFresh();
+        requestRender();
+    }
+    public boolean getIsHalf(){
+        return   mRender.getIshalf();
+    }
 }
