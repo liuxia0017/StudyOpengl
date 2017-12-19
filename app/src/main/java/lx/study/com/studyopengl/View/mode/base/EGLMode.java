@@ -9,7 +9,7 @@ import android.opengl.GLUtils;
 
 import java.nio.FloatBuffer;
 
-import lx.study.com.studyopengl.util.ShareUtils;
+import lx.study.com.studyopengl.util.ShaderUtil;
 
 
 /**
@@ -24,7 +24,7 @@ public abstract class EGLMode implements IEGLMode {
 
     protected int[] mTextureIds;
 
-    protected ShareUtils mDefualShaderUtil;  //工具类
+    protected ShaderUtil mDefualShaderUtil;  //工具类
     /**
      *  着色器程序ID
      */
@@ -42,16 +42,16 @@ public abstract class EGLMode implements IEGLMode {
     } //关闭旋转
 
     //设置工具
-    public void setShaderUitl(ShareUtils utils){
+    public void setShaderUitl(ShaderUtil utils){
         if(utils==null){
-            mDefualShaderUtil = new ShareUtils();
+            mDefualShaderUtil = new ShaderUtil();
         }else{
             this.mDefualShaderUtil = utils;
         }
     }
 
     public EGLMode(Context c, String verFile, String fragFile){
-        mDefualShaderUtil = new ShareUtils();
+        mDefualShaderUtil = new ShaderUtil();
         mContext = c;
         initData();
         mProgram = createProgram(verFile,fragFile,c);

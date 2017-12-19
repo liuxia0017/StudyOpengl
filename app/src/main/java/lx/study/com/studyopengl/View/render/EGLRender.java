@@ -1,12 +1,14 @@
-package lx.study.com.studyopengl.View;
+package lx.study.com.studyopengl.View.render;
 
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import lx.study.com.studyopengl.View.IOnSurfaceCreateListener;
 import lx.study.com.studyopengl.View.mode.base.EGLMode;
 import lx.study.com.studyopengl.util.MatrixState;
 
@@ -24,6 +26,7 @@ public class EGLRender implements GLSurfaceView.Renderer {
     public EGLRender(Context context){
         mContext = context;
     }
+
     public void enableRotat(){
         if(mEGLMode!=null)
             mEGLMode.enableRotat();

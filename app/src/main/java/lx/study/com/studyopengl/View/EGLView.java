@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
 import lx.study.com.studyopengl.View.mode.base.EGLMode;
+import lx.study.com.studyopengl.View.render.EGLRender;
 
 
 /**

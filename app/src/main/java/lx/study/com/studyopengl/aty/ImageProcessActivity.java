@@ -1,14 +1,16 @@
 package lx.study.com.studyopengl.aty;
 
-import android.content.Context;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import lx.study.com.studyopengl.View.EGLView;
-import lx.study.com.studyopengl.View.IOnSurfaceCreateListener;
-import lx.study.com.studyopengl.View.mode.ImageMode;
-import lx.study.com.studyopengl.View.mode.base.EGLMode;
+import lx.study.com.studyopengl.View.image.ImageGLView;
 
 
 /**
@@ -17,34 +19,40 @@ import lx.study.com.studyopengl.View.mode.base.EGLMode;
 
 public class ImageProcessActivity extends AppCompatActivity {
 
-    private EGLView mEGlView;
+    private ImageGLView mGlView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent!=null){
+            String uriStr = intent .getStringExtra("uri");
+            Uri uri = Uri.parse(uriStr);
+            ContentResolver cr = this.getContentResolver();
+            try {
+                Bitmap  bm= BitmapFactory.decodeStream(cr.openInputStream(uri));
 
-        mEGlView = new EGLView(this);
-        mEGlView.setOnSurefaceCreateListener(new IOnSurfaceCreateListener() {
-            @Override
-            public EGLMode createEGLMode(Context c) {
+                mGlView = new ImageGLView(this,bm);
 
+                setContentView(mGlView);
+             } catch (Exception e) {
+                        Log.e("Exception", e.getMessage(),e);
+             }
 
-                ImageMode imageMode = new ImageMode(c,"imageprocess/imagever.glsl","imageprocess/imagefrag.glsl");
-                return imageMode;
-            }
-        });
-        setContentView(mEGlView);
+        }
     }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        mEGlView.onResume();
+        mGlView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mEGlView.onPause();
+            mGlView.onPause();
     }
 }

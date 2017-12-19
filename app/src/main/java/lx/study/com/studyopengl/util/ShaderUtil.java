@@ -11,7 +11,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 //加载顶点Shader与片元Shader的工具类
-public class ShareUtils {
+public class ShaderUtil {
     /**
      * @param ver_Tex(数组,一般为顶点数据);
      * @return Float型缓冲
@@ -62,13 +62,15 @@ public class ShareUtils {
         //加载顶点着色器
         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         if (vertexShader == 0) {
-            return 0;
+            throw new RuntimeException("顶点着色器初始化失败");
+
         }
 
         //加载片元着色器
         int pixelShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentSource);
         if (pixelShader == 0) {
-            return 0;
+            throw new RuntimeException("顶点着色器初始化失败");
+
         }
 
         //创建程序
