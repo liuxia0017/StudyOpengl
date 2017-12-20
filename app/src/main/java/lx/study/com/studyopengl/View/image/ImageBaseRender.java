@@ -52,9 +52,9 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
     private int isHalf = 0;
     public void setHalf(boolean ishalf){
         if(ishalf){
-            isHalf = 1;
+            isHalf = 1;  //一半
         }else {
-            isHalf = 0;
+            isHalf = 0; //全部
         }
     }
 
@@ -168,10 +168,11 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glUseProgram(mProgram);
+        GLES20.glUniform1i(glUisHalf,isHalf);
+
         onDrawSet();
 
 //        GLES20.glUniform1f(glHUxy,uXY);
-        GLES20.glUniform1i(glUisHalf,isHalf);
 
         GLES20.glUniformMatrix4fv(glUVMatrix,1,false,mMVPMatrix,0);
 

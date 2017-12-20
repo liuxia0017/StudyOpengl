@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import lx.study.com.studyopengl.View.image.GrayImageRender;
+import lx.study.com.studyopengl.View.image.ColorImageRender;
 import lx.study.com.studyopengl.View.image.ImageBaseRender;
 import lx.study.com.studyopengl.View.image.ImageGLView;
 
@@ -52,6 +52,9 @@ public class ImageProcessActivity extends AppCompatActivity {
         menuItem1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(0, 1, 1, "原图");
         menu.add(0, 2, 1, "灰度");
+        menu.add(0, 3, 1, "冷色调");
+        menu.add(0, 4, 1, "暖色调");
+        menu.add(0, 5, 1, "模糊");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -59,19 +62,18 @@ public class ImageProcessActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case 0:   mGlView.setHalf(!mGlView.getIsHalf());  break;
-            case 1:   mGlView.setImageRender(new ImageBaseRender(this,"imageprocess/ver.glsl","imageprocess/frag.glsl") {
-                @Override
-                protected void onDrawCreatedSet(int mProgram) {
+            case 0:
+                mGlView.setHalf(!mGlView.getIsHalf());
+                item.setTitle(mGlView.getIsHalf()?"处理全部":"处理一半");
+                break;
+            case 1:   mGlView.setImageRender(new ColorImageRender(this,0));
 
-                }
+                break;
+            case 2:   mGlView.setImageRender(new ColorImageRender(this,1));   break;
+            case 3:   mGlView.setImageRender(new ColorImageRender(this,2));   break;
+            case 4:   mGlView.setImageRender(new ColorImageRender(this,3));   break;
+            case 5:   mGlView.setImageRender(new ColorImageRender(this,4));   break;
 
-                @Override
-                protected void onDrawSet() {
-
-                }
-            });   break;
-            case 2:   mGlView.setImageRender(new GrayImageRender(this));   break;
         }
         return super.onOptionsItemSelected(item);
     }
