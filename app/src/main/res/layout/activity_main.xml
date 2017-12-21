@@ -23,14 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="myClick"
-
         android:text="地球"/>
     <Button
         android:id="@+id/btn_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="myClick"
-
         android:text="图像处理"/>
 
 

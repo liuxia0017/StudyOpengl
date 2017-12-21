@@ -55,6 +55,15 @@ public class ImageProcessActivity extends AppCompatActivity {
         menu.add(0, 3, 1, "冷色调");
         menu.add(0, 4, 1, "暖色调");
         menu.add(0, 5, 1, "模糊");
+        menu.add(0, 6, 1, "马赛克");
+        menu.add(0, 7, 1, "放大");
+        menu.add(0, 8, 1, "缩小");
+        menu.add(0, 9, 1, "扭曲");
+        menu.add(0, 10, 1, "旋转");
+        menu.add(0, 11, 1, "浮雕");
+        menu.add(0, 12, 1, "对比度");
+        menu.add(0, 13, 1, "膨胀");
+        menu.add(0, 14, 1, "腐蚀");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -66,13 +75,21 @@ public class ImageProcessActivity extends AppCompatActivity {
                 mGlView.setHalf(!mGlView.getIsHalf());
                 item.setTitle(mGlView.getIsHalf()?"处理全部":"处理一半");
                 break;
-            case 1:   mGlView.setImageRender(new ColorImageRender(this,0));
-
-                break;
+            case 1:   mGlView.setImageRender(new ColorImageRender(this,0));   break;
             case 2:   mGlView.setImageRender(new ColorImageRender(this,1));   break;
             case 3:   mGlView.setImageRender(new ColorImageRender(this,2));   break;
             case 4:   mGlView.setImageRender(new ColorImageRender(this,3));   break;
             case 5:   mGlView.setImageRender(new ColorImageRender(this,4));   break;
+            case 6:   mGlView.setImageRender(new ColorImageRender(this,5));   break;
+            case 7:   mGlView.setImageRender(new ColorImageRender(this,6));   break;
+            case 8:   mGlView.setImageRender(new ColorImageRender(this,7));   break;
+            case 9:   mGlView.setImageRender(new ColorImageRender(this,8));   break;//扭曲
+            case 10:  mGlView.setImageRender(new ColorImageRender(this,9));   break;
+            case 11:  mGlView.setImageRender(new ColorImageRender(this,10));   break;
+            case 12:  mGlView.setImageRender(new ColorImageRender(this,11));   break;
+            case 13:  mGlView.setImageRender(new ColorImageRender(this,12));   break;
+            case 14:  mGlView.setImageRender(new ColorImageRender(this,13));   break;
+
 
         }
         return super.onOptionsItemSelected(item);

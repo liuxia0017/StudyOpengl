@@ -40,7 +40,7 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
 
 
     protected Bitmap mBitmap;
-    private float uXY;
+    private int glUXY;
     private int glUisHalf;
 
     private float[] mViewMatrix=new float[16];
@@ -50,6 +50,8 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
 
 
     private int isHalf = 0;
+    private float uXY;
+
     public void setHalf(boolean ishalf){
         if(ishalf){
             isHalf = 1;  //一半
@@ -126,6 +128,7 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
         glUVMatrix = GLES20.glGetUniformLocation(mProgram,"vMatrix");
         glUVTextture = GLES20.glGetUniformLocation(mProgram,"vTexture");
         glUisHalf = GLES20.glGetUniformLocation(mProgram,"vIsHalf");
+        glUXY = GLES20.glGetUniformLocation(mProgram,"uXY");
         onDrawCreatedSet(mProgram);
     }
 
@@ -173,7 +176,7 @@ public abstract class ImageBaseRender implements GLSurfaceView.Renderer {
         onDrawSet();
 
 //        GLES20.glUniform1f(glHUxy,uXY);
-
+        GLES20.glUniform1f(glUXY,uXY);
         GLES20.glUniformMatrix4fv(glUVMatrix,1,false,mMVPMatrix,0);
 
         GLES20.glVertexAttribPointer(glAPosition,2,GLES20.GL_FLOAT,false,0,bPos);
